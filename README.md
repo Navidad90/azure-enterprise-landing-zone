@@ -11,6 +11,27 @@ The goal is to establish a **safe, governed, and scalable Azure foundation** for
 
 This was implemented **without impacting live production workloads**.
 
+## Why this project exists
+
+This project documents how I redesigned a real Azure tenant that initially had:
+- a single subscription
+- production and test workloads mixed together
+- no governance or tagging
+
+The tenant included:
+- a production AKS cluster (custom ChatGPT)
+- AI / OpenAI services
+- sandbox and intern workloads
+
+The goal was to introduce enterprise-grade structure
+**without breaking production**.
+
+This repository shows:
+- the final management group design
+- how production was protected
+- how Terraform was structured before implementation
+- how governance was introduced safely
+
 ---
 
 ## Business Problem
