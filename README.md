@@ -1,100 +1,168 @@
 # Azure Enterprise Landing Zone (Production-Safe)
 
 ## Overview
-This project implements a **production-grade Azure Landing Zone** following Microsoft Enterprise Landing Zone principles.
+This repository documents the design and implementation of a **production-grade Azure Enterprise Landing Zone**, built using **Microsoft best practices** and **Terraform-first principles**.
 
-The goal is to establish a **safe, governed, and scalable Azure foundation** for:
-- Production AKS workloads
+The work was performed against a **real Azure tenant** that already contained:
+- a production AKS cluster (custom internal ChatGPT)
 - AI / OpenAI services
-- Future Dev/Test environments
-- Infrastructure-as-Code using Terraform
-
-This was implemented **without impacting live production workloads**.
-
-## Why this project exists
-
-This project documents how I redesigned a real Azure tenant that initially had:
-- a single subscription
-- production and test workloads mixed together
-- no governance or tagging
-
-The tenant included:
-- a production AKS cluster (custom ChatGPT)
-- AI / OpenAI services
+- shared platform resources
 - sandbox and intern workloads
 
-The goal was to introduce enterprise-grade structure
-**without breaking production**.
-
-This repository shows:
-- the final management group design
-- how production was protected
-- how Terraform was structured before implementation
-- how governance was introduced safely
+The primary objective was to **introduce enterprise-grade structure, governance, and security**
+**without causing downtime or impacting production workloads**.
 
 ---
 
-## Business Problem
-Initially, all Azure workloads (production, test, sandbox) were deployed into:
-- A single subscription
-- Under the Tenant Root management group
-- With no clear governance boundaries
+## What this repository represents (important)
+This is **not a collection of disconnected demos**.
+
+This repository represents:
+> **One Azure tenant, evolved step by step into an enterprise-ready platform.**
+
+Each project builds on the previous one, exactly how real organizations modernize Azure environments.
+
+---
+
+## Business Context
+Originally, the Azure tenant had:
+- a single subscription
+- all workloads mixed together (production, test, sandbox)
+- no management group hierarchy
+- no tagging strategy
+- no Infrastructure-as-Code foundation
 
 This increased:
-- Operational risk
-- Cost opacity
-- Difficulty enforcing security controls safely
+- operational risk
+- security exposure
+- cost opacity
+- difficulty scaling safely
 
 ---
 
-## Solution
-A phased, zero-downtime approach was used:
+## Repository Structure (High-Level)
 
-1. Introduce **Management Group hierarchy**
-2. Protect production workloads
-3. Classify resources using **tags**
-4. Prepare the tenant for **Terraform-driven governance**
-5. Enable future Prod / NonProd separation
+.
+├── README.md # Entry point (this file)
+├── docs/ # Architecture & design documentation
+└── terraform/ # Infrastructure-as-Code implementation
+
 
 ---
 
-## Final Management Group Hierarchy
+## Projects in This Repository
 
-Tenant Root  
-├── Platform  
-│   ├── Management  
-│   └── Identity  
-│  
-└── LandingZones  
-    ├── Corp-Prod  
-    │   └── Azure subscription 1 (Production)  
-    └── Corp-NonProd  
-        └── (Future NonProd subscription)
+### Project 1 — Enterprise Azure Landing Zone (Governance Foundation)
+
+**Goal:**  
+Establish a safe, governed Azure foundation **without touching live production resources**.
+
+**What was implemented:**
+- Management Group hierarchy (Corp / Prod / NonProd)
+- Production workload protection
+- Tagging strategy for classification and cost visibility
+- Enterprise Terraform folder architecture
+- Governance-first, zero-downtime approach
+
+**Key outcomes:**
+- Production AKS and AI workloads remained untouched
+- Governance was introduced safely
+- Tenant prepared for Infrastructure-as-Code adoption
+
+**Relevant documentation:**
+- `docs/governance-baseline.md`
+- `docs/management-groups.md`
+- `docs/tagging-strategy.md`
+- `docs/terraform-architecture.md`
+
+---
+
+### Project 2 — IAM & RBAC Platform (Security & Access Control)
+
+**Goal:**  
+Design and enforce **enterprise-grade access control** using Azure RBAC and Terraform.
+
+**What was implemented:**
+- Entra ID users and security groups
+- Group-based access model (Admin / Developer / Auditor)
+- Least-privilege role assignments
+- Terraform-managed RBAC
+- Safe, isolated test resource groups
+- Real user validation (no theory-only work)
+
+**Key outcomes:**
+- No permissions assigned directly to users
+- No production access changes
+- RBAC validated by logging in as real users
+- Access is auditable, reproducible, and scalable
+
+**Relevant documentation:**
+- `docs/project-2-summary.md` (non-technical overview)
+- `docs/iam-rbac.md` (detailed technical explanation)
+- `terraform/platform/identity/` (Terraform implementation)
+
+---
+
+## Final Management Group Hierarchy (After Project 1)
+
+Tenant Root
+├── Platform
+│ ├── Management
+│ └── Identity
+│
+└── LandingZones
+├── Corp-Prod
+│ └── Azure subscription 1 (Production)
+└── Corp-NonProd
+└── (Future NonProd subscription)
+
 
 ---
 
 ## Production Safety Guarantees
+Throughout all projects:
 - No resources were moved
-- No AKS changes
-- No policies enforced
-- No downtime
+- No AKS changes were made
+- No policies were enforced
+- No downtime occurred
 
-All changes were **governance-only**.
+All changes were **design, governance, or test-only**.
 
 ---
 
-## Key Governance Mechanism: Tagging
+## Terraform Philosophy Used
+- Infrastructure-as-Code by default
+- Clear separation of:
+  - bootstrap
+  - platform services
+  - reusable modules
+  - environments
+- No Terraform state or secrets committed to GitHub
+- Designed for multi-subscription growth
 
-Tags were applied at **resource group level** to classify workloads without risk.
+---
 
-### Mandatory Tags
-- environment: prod | nonprod
-- workload: aks | ai | platform | sandbox
-- owner
-- criticality: high | medium | low
+## Why this repository matters
+This repository demonstrates:
+- real Azure platform thinking
+- safe modernization of existing environments
+- governance before automation
+- security before convenience
+- Terraform used responsibly
 
-### Example
-Production AKS resource group:
+It reflects **how enterprise Azure platforms are actually built**, not tutorial examples.
 
-****<img width="1471" height="679" alt="image" src="https://github.com/user-attachments/assets/693d9414-0432-42b4-8589-9f0338f1d8fb" />
+---
 
+## Next planned projects
+- Project 3 — Enterprise Networking (Hub & Spoke)
+- Project 4 — Secure Application Platform
+- Project 5 — CI/CD for Infrastructure
+- Project 6 — AKS Platform & Workloads
+
+---
+
+## Author
+**Navid**  
+Azure Solutions Architect / Cloud Engineer  
+Focus: Azure, Terraform, Security, AKS, Enterprise Platforms
