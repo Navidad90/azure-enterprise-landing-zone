@@ -95,3 +95,6 @@ Tags were applied at **resource group level** to classify workloads without risk
 
 ### Example
 Production AKS resource group:
+
+****<img width="1471" height="679" alt="image" src="https://github.com/user-attachments/assets/693d9414-0432-42b4-8589-9f0338f1d8fb" />
+
