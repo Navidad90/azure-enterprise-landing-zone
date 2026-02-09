@@ -1,15 +1,38 @@
 # Tagging Strategy
 
-Tags are labels.
-They do NOT change or restart resources.
+## Purpose
+Tags allow Azure resources to be understood by humans, not just engineers.
 
-Used to:
-- identify prod vs nonprod
-- understand ownership
-- prepare for future separation
+They enable:
+- cost tracking
+- ownership clarity
+- workload classification
+- audit readiness
 
-Core tags:
-- environment
-- workload
+---
+
+## Tagging Rules
+Tags were applied at **Resource Group level** to avoid risk.
+
+---
+
+## Mandatory Tags
+- environment: prod | nonprod
+- workload: aks | ai | platform | sandbox
 - owner
-- criticality
+- criticality: high | medium | low
+
+---
+
+## Example
+A production AKS resource group was tagged to classify:
+- environment = prod
+- workload = aks
+- criticality = high
+
+---
+
+## Safety
+Tagging does not modify resources and is fully reversible.
+
+No production impact occurred.
